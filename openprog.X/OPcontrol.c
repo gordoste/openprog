@@ -101,6 +101,8 @@ software SPI
 #elif defined(__18F2458)||defined(__18F2553)
 	#define ID0	3
 	#define ADC12		//12 bit ADC requires a different algorithm for DCDC control
+#elif defined(__18F25K50)
+	#define ID0	4
 #else
 	#define ID0	255
 #endif
