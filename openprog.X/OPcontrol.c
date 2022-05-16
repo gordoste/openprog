@@ -260,14 +260,25 @@ unsigned char SW_IO_SPI(unsigned char c);	//transfer one byte
 
 void UserInit(void)
 {
+#if defined(__18F25K50)
+	OSCCON=0x70;	//16MHz INTRC
+	ACTCON=0x90;	//self tuning with USB
+	// Set all I/O pins to digital
+	ANSELA=1;	//analog input on RA0
+	ANSELB=0;
+	ANSELC=0;
+	ADCON1=0x0;				//internal ref, trigger from CCP2
+#else
+	ADCON1=0x0E;			//AN0, internal ref
+#endif
+	ADCON0=0x01;			//AN0, ADC ON
+	ADCON2=0b10000110;		//LSB, 0Tad (no channel switch), FOSC/64
+	if(PORTEbits.RE3==0) progmode=1;
 	IN_pending=0;
 	led_cnt=0;
 	LATB=0;
 	LATA=0;
 	TRISA=0b11111001;
-	ADCON0=0x01;			//AN0, ADC ON
-	ADCON1=0x0E;			//AN0, internal ref
-	ADCON2=0b10000110;		//LSB, 0Tad, FOSC/64
 #if !defined(NO_CCP2)
 	CCP1CON=CCP2CON=0;
 #else
@@ -416,7 +427,12 @@ void ParseCommands(void)
 				PIR1bits.ADIF=0;
 				PIE1bits.ADIE=1;	//enable ADC interrupt
 				TMR3L=TMR3H=0;
+	#if defined(__18F25K50)
+				CCPTMRSbits.C2TSEL=1;		//CCP2 in compare mode uses TIMER3
+				T3CON=0b00000011;	//timer3, FOSC/4, 16 bit, no prescaler
+	#else
 				T3CON=0b10001001;	//timer3, 16 bit, linked to CCP2, no prescaler
+	#endif
 				CCP2CON=0x0B;		//enable compare mode with ADC trigger
 #endif
 				CCPR1L=0;			//SetDCPWM1(0);
