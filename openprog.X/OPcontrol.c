@@ -216,16 +216,16 @@ byte T2,M,N;
 int T3,timeout;
 
 /* all accesses to these will be unbanked */
-near unsigned char RXptr=0,TXptr=0,TXaux=0;
-near int pwm=0;
-near byte pwm_maxH=100,T1=1;
-near int volatile err=0,errz=0,vreg=13.0*Vcost;
-near byte i=0,i2=0,RES0=0,RES1=0,RES2=0,RES3=0;
-near int d=0,dH=0; 
+__near static unsigned int RXptr=0,TXptr=0,TXaux=0;
+__near static int pwm=0;
+__near static byte pwm_maxH=100,T1=1;
+__near static int volatile err=0,errz=0,vreg=(int)(13.0*Vcost);
+__near static byte i=0,i2=0,RES0=0,RES1=0,RES2=0,RES3=0;
+__near static int d=0,dH=0; 
 #if defined(SW_SPI)||defined(SW_I2C)
-near unsigned char I2C_BUFFER=0;    // temp buffer for R/W operations
-near unsigned char BIT_COUNTER=0;   // temp buffer for bit counting
-near byte tt=0;
+__near static unsigned char I2C_BUFFER=0;    // temp buffer for R/W operations
+__near static unsigned char BIT_COUNTER=0;   // temp buffer for bit counting
+__near static byte tt=0;
 #endif
 
 /** P R I V A T E  P R O T O T Y P E S ***************************************/
