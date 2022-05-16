@@ -80,34 +80,33 @@
 // CONFIG7H (default)
 #pragma config EBTRB = OFF      // Boot Block Table Read Protection bit (Boot block (000000-0007FFh) is not protected from table reads executed in other blocks)
 
-
-
-// Allocate buffers in RAM for storage of bytes that have either just
-// come in from the SIE or are waiting to go out to the SIE.
-//char txBuffer[HID_INPUT_REPORT_BYTES];
-//char rxBuffer[HID_OUTPUT_REPORT_BYTES];
-
 #if DEBUG_PRINT
-static void InitializeUSART()
-{
+
+void putch(char data) {
+    while (0 == PIR1bits.TX1IF) {
+    }
+
+    TXREG1 = data; // Write the data byte to the USART.
+}
+
+static void InitializeUSART() {
     TRISC &= 0xBF; // Set RC6 as an output
     TRISC |= 0x80; // Set RC7 as an input
-    RCSTA   = 0x90; // Enable serial port, enable receiver
-    TXSTA   = 0x24; // Asynch, TSR empty, BRGH=1
+    // ABDOVF no_overflow; CKTXP async_noninverted_sync_fallingedge; BRG16 16bit_generator; WUE disabled; ABDEN disabled; DTRXP not_inverted; 
+    BAUDCON1 = 0x08;
 
-    // Baud rate formula for BRG16=1, BRGH=1: Baud Rate = Fosc/(4 (n + 1)),
-    // or n = (Fosc / (4 * BaudRate)) - 1
-    // At 48 MHz, for 115.2K Baud:
-    //     SPBRGH:SPBRG = n = Fosc / (4 * 115200) - 1 = 103.17
-    BAUDCON = 0x18; // BRG16=1 txd inverted
-//    SPBRGH  = 0x00; // At 48MHz, SPBRGH=0, SPBRG=103 gives 115.2K Baud
-    SPBRGH  = 0x02; // 0x0270 gives 19200 Baud
-#if CLK_48MHZ
-//    SPBRG   = 103;  // For 48 MHz clock
-    SPBRG   = 0x70;  // For 48 MHz clock
-#else
-    SPBRG   = 52;   // For 24 MHz clock
-#endif
+    // SPEN enabled; RX9 8-bit; CREN enabled; ADDEN disabled; SREN disabled; 
+    RCSTA1 = 0x90;
+
+    // TX9 8-bit; TX9D 0; SENDB sync_break_complete; TXEN enabled; SYNC asynchronous; BRGH hi_speed; CSRC slave_mode; 
+    TXSTA1 = 0x24;
+
+    // SPBRG1 112; 
+    SPBRG1 = 0x70;
+
+    // SPBRGH1 2; 
+    SPBRGH1 = 0x02;
+
     printf("USB Test Startup\r\n");
 }
 #endif
