@@ -61,7 +61,7 @@ byte HIDPostProcess;    // Set to 1 if HID needs to process after the data stage
 byte requestHandled;    // Set to 1 if request was understood and processed.
 
 byte *outPtr;           // Data to send to the host
-rom byte *ROMoutPtr;    // Data to send to the host
+const byte *ROMoutPtr;    // Data to send to the host
 byte *inPtr;            // Data from the host
 word wCount;            // Number of bytes of data
 byte transferType;		// 0=ram 1=rom
@@ -71,7 +71,7 @@ byte hidIdleRate;
 byte hidProtocol; // [0] Boot Protocol [1] Report Protocol
 byte hidRxLen;    // # of bytes put into buffer
 
-rom byte deviceDescriptor[] =
+const byte deviceDescriptor[] =
 {
     0x12, 0x01, // bLength, bDescriptorType
     0x00, 0x02, // bcdUSB (low byte), bcdUSB (high byte)
@@ -89,7 +89,7 @@ rom byte deviceDescriptor[] =
 #define HISZ HID_INPUT_REPORT_BYTES
 #define HOSZ HID_OUTPUT_REPORT_BYTES
 
-rom ConfigStruct configDescriptor =
+const ConfigStruct configDescriptor =
 {
     {
     // Configuration descriptor
@@ -130,7 +130,7 @@ rom ConfigStruct configDescriptor =
 //#define HFRB HID_FEATURE_REPORT_BYTES
 
 #define HID_REPORT_SIZE 34 // Size is from HID Descriptor tool
-rom byte HIDReport[HID_REPORT_SIZE] = {
+const byte HIDReport[HID_REPORT_SIZE] = {
     0x06, 0xa0, 0xff,  // USAGE_PAGE (Vendor Defined Page 1)
     0x09, 0x01,        // USAGE (Vendor Usage 1)
     0xa1, 0x01,        // COLLECTION (Application)
@@ -154,17 +154,17 @@ rom byte HIDReport[HID_REPORT_SIZE] = {
     0xc0               // END_COLLECTION
 };
 
-rom byte stringDescriptor0[] =
+const byte stringDescriptor0[] =
 {
     0x04, STRING_DESCRIPTOR,
     0x09, 0x04,
 };
-rom byte stringDescriptor1[] =
+const byte stringDescriptor1[] =
 {
     32, STRING_DESCRIPTOR, // bLength, bDscType
     'O',0,'p',0,'e',0,'n',0,' ',0,'P',0,'r',0,'o',0,'g',0,'r',0,'a',0,'m',0,'m',0,'e',0,'r',0,
 };
-rom byte stringDescriptor2[] =
+const byte stringDescriptor2[] =
 {
     62, STRING_DESCRIPTOR,
     'O',0,'p',0,'e',0,'n',0,' ',0,'P',0,'r',0,'o',0,'g',0,'r',0,'a',0,'m',0,'m',0,'e',0,'r',0,' ',0,
@@ -355,7 +355,7 @@ void ProcessHIDRequest(void)
 #endif
             // HID descriptor.
             requestHandled = 1;
-            ROMoutPtr = (rom byte*)&configDescriptor.HIDDescriptor;
+            ROMoutPtr = (const byte*)&configDescriptor.HIDDescriptor;
             wCount = HID_HEADER_SIZE;
             transferType=1;
         }
@@ -366,7 +366,7 @@ void ProcessHIDRequest(void)
 #endif
             // Report descriptor.
             requestHandled = 1;
-            ROMoutPtr = (rom byte *)HIDReport;
+            ROMoutPtr = (const byte *)HIDReport;
             wCount = HID_REPORT_SIZE;
             transferType=1;
         }
@@ -474,7 +474,7 @@ static void GetDescriptor(void)
                 printf("DEVICE_DESCRIPTOR\r\n");
 #endif
                 requestHandled = 1;
-                ROMoutPtr = (rom byte *)&deviceDescriptor;
+                ROMoutPtr = (const byte *)&deviceDescriptor;
                 wCount = DEVICE_DESCRIPTOR_SIZE;
 				transferType=1;
         }
