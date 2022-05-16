@@ -559,9 +559,9 @@ void ParseCommands(void)
 				TXins(SET_VPP);
 				if(RXptr+1<number_of_bytes_read){
 #if !defined(NO_CCP2)
-					if(!PIE1bits.ADIE||!HLVDCONbits.IVRST) TXins(INS_ERR); //Check interrupt and HLVD
+					if(!PIE1bits.ADIE||!HLVDCONbits.IRVST) TXins(INS_ERR); //Check interrupt and HLVD
 #else
-					if(!PIE1bits.TMR1IE||!HLVDCONbits.IVRST) TXins(INS_ERR); //Check interrupt and HLVD
+					if(!PIE1bits.TMR1IE||!HLVDCONbits.IRVST) TXins(INS_ERR); //Check interrupt and HLVD
 #endif
 					else{
 						PIR2bits.HLVDIF=0;
