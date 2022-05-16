@@ -123,23 +123,23 @@ software SPI
 #define CKlat 		LATB
 #define CKport 		PORTB
 #define CKtris 		TRISB
-#define CK_bit 		LATBbits.LATB6
+#define CK__bit 		LATBbits.LATB6
 #define CKdir_bit	TRISBbits.TRISB6
-#define CK0()  		CK_bit=0
-#define CK1()  		CK_bit=1
+#define CK0()  		CK__bit=0
+#define CK1()  		CK__bit=1
 #define CKin() 		CKdir_bit=1
 #define CKout()		CKdir_bit=0
-#define CKpulse()  	{CK_bit=1; CK_bit=0;}
-#define CKpulseL() 	{Nop(); CK_bit=1; Nop(); Nop(); Nop(); CK_bit=0;}
-#define CKpulseN()  {CK_bit=1; Nop(); CK_bit=0; Nop();}
+#define CKpulse()  	{CK__bit=1; CK__bit=0;}
+#define CKpulseL() 	{Nop(); CK__bit=1; Nop(); Nop(); Nop(); CK__bit=0;}
+#define CKpulseN()  {CK__bit=1; Nop(); CK__bit=0; Nop();}
 #define PGMnum 		7
 #define PGMlat 		LATB
 #define PGMport 	PORTB
 #define PGMtris 	TRISB
-#define PGM_bit 	LATBbits.LATB7
+#define PGM__bit 	LATBbits.LATB7
 #define PGMdir_bit	TRISBbits.TRISB7
-#define PGM0()  	PGM_bit=0
-#define PGM1()  	PGM_bit=1
+#define PGM0()  	PGM__bit=0
+#define PGM1()  	PGM__bit=1
 #define PGMin() 	PGMdir_bit=1
 #define PGMout()	PGMdir_bit=0
 #define A2			LATBbits.LATB5
@@ -618,9 +618,9 @@ void ParseCommands(void)
 				i=0;
 				if(PORTBbits.RB5) i|=1;	//D_bit
 				if(Ddir_bit) i|=2;
-				if(PORTBbits.RB6) i|=4;	//CK_bit
+				if(PORTBbits.RB6) i|=4;	//CK__bit
 				if(CKdir_bit) i|=8;
-				if(PORTBbits.RB7) i|=16;	//PGM_bit
+				if(PORTBbits.RB7) i|=16;	//PGM__bit
 				if(PGMdir_bit) i|=32;
 				TXins(i);
 				break;
