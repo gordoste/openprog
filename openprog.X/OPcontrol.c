@@ -83,8 +83,11 @@ software SPI
 #define ID2	0
 #define ID1	0
 #define TX_TEMP_MAX 10
-#define LOBYTE(x) (*((char *)&x))
-#define HIBYTE(x) (*(((char *)&x)+1))
+#define LOBYTE(x) (*((byte *)&x))
+#define HIBYTE(x) (*(((byte *)&x)+1))
+#define LOBYTESGN(x) (*((signed char *)&x))
+#define HIBYTESGN(x) (*((signed char *)&x))
+#define BYTECAST(x) (byte)(x)
 #define RX_ERR 	 	0xfe	//RX error
 #define INS_ERR	 	0xfe	//instruction error
 #define ACK_ERR 	0xfd	//I2C acknowledge error
@@ -287,11 +290,11 @@ void BlinkStatus(){
 		INTCONbits.TMR0IF=0;
 		led_cnt++;
 		if (deviceState<CONFIGURED&&led_cnt>=10){
-			LED2 = !LED2;
+			LED2 = BYTECAST(!LED2);
 			led_cnt=0;
 		}
 		else if (deviceState == CONFIGURED&&led_cnt>=46){
-			LED2 = !LED2;
+			LED2 = BYTECAST(!LED2);
 			led_cnt=0;
 		}
 	}
@@ -577,10 +580,10 @@ void ParseCommands(void)
 				TXins(EN_VPP_VCC);
 				if(RXptr+1<number_of_bytes_read){
 					i=receive_buffer[++RXptr];
-					vcc_bit=(i&0x01)?0:1;
-					vcc_dir=(i&0x02)?1:0;
-					vpp_bit=(i&0x04)?1:0;
-					vpp_dir=(i&0x08)?1:0;
+					vcc_bit=BYTECAST((i&0x01)?0:1);
+					vcc_dir=BYTECAST((i&0x02)?1:0);
+					vpp_bit=BYTECAST((i&0x04)?1:0);
+					vpp_dir=BYTECAST((i&0x08)?1:0);
 				}
 				else{
 					TXins(RX_ERR);
@@ -593,12 +596,12 @@ void ParseCommands(void)
 				//bit 4= PGM level, bit 5=PGM imp.
 				TXins(SET_CK_D);
 				if(RXptr+1<number_of_bytes_read){
-					D_bit=(receive_buffer[++RXptr]&1)?1:0;
-					Ddir_bit=(receive_buffer[RXptr]&2)?1:0;
-					CK_bit=(receive_buffer[RXptr]&4)?1:0;
-					CKdir_bit=(receive_buffer[RXptr]&8)?1:0;
-					PGM_bit=(receive_buffer[RXptr]&16)?1:0;
-					PGMdir_bit=(receive_buffer[RXptr]&32)?1:0;
+					D_bit=BYTECAST((receive_buffer[++RXptr]&1)?1:0);
+					Ddir_bit=BYTECAST((receive_buffer[RXptr]&2)?1:0);
+					CK__bit=BYTECAST((receive_buffer[RXptr]&4)?1:0);
+					CKdir_bit=BYTECAST((receive_buffer[RXptr]&8)?1:0);
+					PGM__bit=BYTECAST((receive_buffer[RXptr]&16)?1:0);
+					PGMdir_bit=BYTECAST((receive_buffer[RXptr]&32)?1:0);
 				}
 				else{
 					TXins(RX_ERR);
@@ -1915,14 +1918,14 @@ void ParseCommands(void)
 					for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 					for(SSPCON2bits.SEN=1;SSPCON2bits.SEN;);		//start
 					if(i){
-						for(SSPBUF=LOBYTE(d)&0xFE;SSPSTATbits.BF;);		//address1 write
+						for(SSPBUF=BYTECAST(LOBYTE(d)&0xFE);SSPSTATbits.BF;);		//address1 write
 						for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 						if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 							for(SSPBUF=receive_buffer[++RXptr];SSPSTATbits.BF;);	//address2
 							for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 							if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 								for(SSPCON2bits.RSEN=1;SSPCON2bits.RSEN;);		//restart
-								for(SSPBUF=LOBYTE(d)|0x01;SSPSTATbits.BF;);		//address1 read
+								for(SSPBUF=BYTECAST(LOBYTE(d)|0x01);SSPSTATbits.BF;);		//address1 read
 								for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 								if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 									HIBYTE(d)=0;
@@ -1937,7 +1940,7 @@ void ParseCommands(void)
 						}
 					}
 					else{
-						for(SSPBUF=LOBYTE(d)|0x01;SSPSTATbits.BF;);		//address1 read
+						for(SSPBUF=BYTECAST(LOBYTE(d)|0x01);SSPSTATbits.BF;);		//address1 read
 						for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 						if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 							HIBYTE(d)=0;
@@ -2006,7 +2009,7 @@ void ParseCommands(void)
 					LOBYTE(d)=receive_buffer[++RXptr];				//save address1
 					for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 					for(SSPCON2bits.SEN=1;SSPCON2bits.SEN;);		//start
-					for(SSPBUF=LOBYTE(d)&0xFE;SSPSTATbits.BF;);		//address1 write
+					for(SSPBUF=BYTECAST(LOBYTE(d)&0xFE);SSPSTATbits.BF;);		//address1 write
 					for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 					if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 						for(SSPBUF=receive_buffer[++RXptr];SSPSTATbits.BF;);	//address2
@@ -2016,7 +2019,7 @@ void ParseCommands(void)
 							for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 							if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 								for(SSPCON2bits.RSEN=1;SSPCON2bits.RSEN;);		//restart
-								for(SSPBUF=LOBYTE(d)|0x01;SSPSTATbits.BF;);		//address1 read
+								for(SSPBUF=BYTECAST(LOBYTE(d)|0x01);SSPSTATbits.BF;);		//address1 read
 								for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););		//wait idle
 								if(!SSPCON2bits.ACKSTAT){						//acknowledge ?
 									HIBYTE(d)=0;
@@ -2080,7 +2083,7 @@ void ParseCommands(void)
 				if(RXptr+2+i<number_of_bytes_read){
 					for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););			//wait idle
 					for(SSPCON2bits.SEN=1;SSPCON2bits.SEN;);			//start
-					for(SSPBUF=receive_buffer[++RXptr]&0xFE;SSPSTATbits.BF;);		//address1 write
+					for(SSPBUF=BYTECAST(receive_buffer[++RXptr]&0xFE);SSPSTATbits.BF;);		//address1 write
 					for(;(SSPCON2&0x1F)|(SSPSTATbits.R_W););			//wait idle
 					if(!SSPCON2bits.ACKSTAT){							//acknowledge ?
 						for(SSPBUF=receive_buffer[++RXptr];SSPSTATbits.BF;);	//address2
@@ -2175,7 +2178,7 @@ void ParseCommands(void)
 						WP_dir=0;					//WP=RESET
 						WP=0;
 						SDO_dir=0;					//SDO
-						T2=i&0xC;				//mode
+						T2=BYTECAST(i&0xC);				//mode
 						i&=0x03;					// 00000011
 						if(i==0) T1=18;			//100 kbps
 						else if(i==1) T1=8;		//200 kbps
@@ -2248,8 +2251,8 @@ void ParseCommands(void)
 				if(RXptr+2<number_of_bytes_read){
 					LATB=receive_buffer[++RXptr];
 					i=receive_buffer[++RXptr];
-					LATC=(LATC&0x3F)|(i&0xC0); 	//00111111
-					LATA=(LATA&0xC7)|(i&0x38); 	//11000111
+					LATC=BYTECAST((LATC&0x3F)|(i&0xC0)); 	//00111111
+					LATA=BYTECAST((LATA&0xC7)|(i&0x38)); 	//11000111
 				}
 				else{
 					TXins(RX_ERR);
@@ -2556,16 +2559,16 @@ void ParseCommands(void)
 			case SIX_N:
 				TXins(SIX_N);
 				i=receive_buffer[++RXptr];
-				i2=i&0x3F;
+				i2=BYTECAST(i&0x3F);
 				if(RXptr+i2+i2+i2<number_of_bytes_read){
 					byte j,n;
-					n=i&0xC0;
+					n=BYTECAST(i&0xC0);
 					if(n==0x40) n=28;
 					else if(n==0x80) n=56;
 					else if(n==0xC0) n=84;
 					INTCONbits.GIE=0;
 					Ddir_bit=0;		//Output
-					for(j=i&0x3F;j;j--){
+					for(j=BYTECAST(i&0x3F);j;j--){
 						D0();
 						CKpulseL();
 						CKpulseL();
@@ -2782,7 +2785,7 @@ void ParseCommands(void)
 			case uWTX:				//Transmit N bit data
 				TXins(uWTX);
 				i=receive_buffer[++RXptr];
-				if(RXptr+(i-1)>>3+1<number_of_bytes_read){
+				if(RXptr+BYTECAST((i-1)>>3)+1<number_of_bytes_read){
 					INTCONbits.GIE=0;
 					i2=0;
 					for(;i>0;i--,i2--){
@@ -2807,15 +2810,15 @@ void ParseCommands(void)
 					INTCONbits.GIE=1;
 				}
 				else{
-					TXins(RX_ERR);
+					TXins(BYTECAST(RX_ERR));
 					receive_buffer[RXptr+1]=FLUSH;
 				}
 				break;
 			case uWRX:				//Receive N bit data
-				TXins(uWRX);
-				if(RXptr+1<number_of_bytes_read&&TXptr+(i-1)>>3+1<HID_INPUT_REPORT_BYTES){
+				TXins(BYTECAST(uWRX));
+				if(RXptr+1<number_of_bytes_read&&TXptr+BYTECAST((i-1)>>3)+1<HID_INPUT_REPORT_BYTES){
 					i=receive_buffer[++RXptr];
-					TXins(i);
+					TXins(BYTECAST(i));
 					INTCONbits.GIE=0;
 					LOBYTE(d)=0;
 					i2=8;
@@ -2947,7 +2950,7 @@ void ParseCommands(void)
 				break;
 			case UNIO_STBY:		// UNI/O standby pulse
 				//Execution time: ~621us
-				TXins(UNIO_STBY);
+				TXins(BYTECAST(UNIO_STBY));
 				INTCONbits.GIE=0;
 				SDA=0;
 				SDA_dir=0;
@@ -3052,7 +3055,7 @@ void ParseCommands(void)
 						Delay1us(10);	//10us
 						if(SDA_p==0) k=1;
 						if(k){			//incorrect SAK
-							TXins(ACK_ERR);
+							TXins(BYTECAST(ACK_ERR));
 							i=1;
 							i2=0;
 							RXptr+=i;
@@ -3080,7 +3083,7 @@ void ParseCommands(void)
 						SDA_dir=1;		//input
 						for(k=8;k>0;k--){
 							Delay1us(3); // 1/4 bit
-							dx=dx<<1;
+							dx=BYTECAST(dx<<1);
 							if(SDA_p==0){
 								Delay1us(10);	//10us
 								if(SDA_p==1) dx+=1;
@@ -3156,8 +3159,8 @@ void ParseCommands(void)
 				if(RXptr+2<number_of_bytes_read){
 					TRISB=receive_buffer[++RXptr];
 					i=receive_buffer[++RXptr];
-					TRISC=(TRISC&0x3F)|(i&0xC0); 	//00111111
-					TRISA=(TRISA&0xC7)|(i&0x38); 	//11000111
+					TRISC=BYTECAST((TRISC&0x3F)|(i&0xC0)); 	//00111111
+					TRISA=BYTECAST((TRISA&0xC7)|(i&0x38)); 	//11000111
 				}
 				else{
 					TXins(RX_ERR);
@@ -3170,7 +3173,7 @@ void ParseCommands(void)
 				break;
 			case READ_AC:				//read PORTA-C (RC7:RC6:RA5:RA4:RA3:0:0:0)
 				TXins(READ_AC);
-				TXins(PORTA&0x38|PORTC&0xC0);
+				TXins(BYTECAST(PORTA&0x38|PORTC&0xC0));
 				break;
 			case AT_HV_RTX:
 			//Transmit 2N*8 bit data MSB first on RB0/RC7 (PB1/PB0) CLK on RC6 (PB3)
@@ -3773,13 +3776,13 @@ void interrupt low_priority timer_isr (void)
 
 	if(pwm<=-512) pwm=-512;
 	if(pwm>0x6400) pwm=0x6400;
-	if(HIBYTE(pwm)<0){
+	if(HIBYTESGN(pwm)<0){ // Use macro to interpret hi byte as signed
 		CCPR1L=0;
-		CCP1CON = (CCP1CON & 0xCF);
+		CCP1CON = (byte)(CCP1CON & 0xCF);
 	}
 	else{
 		CCPR1L=HIBYTE(pwm);
-		CCP1CON = (CCP1CON & 0xCF) | ((LOBYTE(pwm) >> 2) & 0x30);
+		CCP1CON = (byte)((CCP1CON & 0xCF) | ((LOBYTE(pwm) >> 2) & 0x30));
 	}
 }
 #pragma code
@@ -3788,8 +3791,8 @@ void interrupt low_priority timer_isr (void)
 Delay function; waits for N us   (minimum 2 us!)
  *****************************************************************************/
 void Delay1us(unsigned char delay){
-	byte d=delay-2;
-	for(;d;d--){
+	byte _d=(byte)(delay-2);
+	for(;_d;_d--){
 		Nop();
 		Nop();
 		Nop();
