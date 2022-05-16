@@ -1212,7 +1212,7 @@ void ParseCommands(void)
 							Nop();
 						}
 						if(t==d){
-							i=j+1;
+							i=BYTECAST(j+1);
 							j=0xff;
 						}
 					}
@@ -2982,7 +2982,7 @@ void ParseCommands(void)
 								//SDA_dir=1;	//hiZ
 								Delay1us(10);	//10us
 							}
-							i2=i2>>1;
+							i2=BYTECAST(i2>>1);
 						}
 						INTCONbits.GIE=1;
 					}
@@ -3013,7 +3013,7 @@ void ParseCommands(void)
 							Nop();
 							SDA_dir=1;	//hiZ
 							Delay1us(8);	//8us
-							i2=i2>>1;
+							i2=BYTECAST(i2>>1);
 							if(SDA_p==1) i2+=0x80;
 							Delay1us(40);	//40us
 							SDA=1;		//active pull-up
@@ -3095,7 +3095,7 @@ void ParseCommands(void)
 						if(SDA_p==0) k=1;
 						Delay1us(2);
 						if(k){			//incorrect SAK
-							TXins(ACK_ERR);
+							TXins(BYTECAST(ACK_ERR));
 							i=i2=0;
 							RXptr+=i;
 						}
@@ -3117,7 +3117,7 @@ void ParseCommands(void)
 								SDA=0;
 							}
 							Delay1us(8);	//10us
-							dx=dx<<1;
+							dx=BYTECAST(dx<<1);
 						}
 						if(i2||i>1){
 							SDA=0;			//MAK
