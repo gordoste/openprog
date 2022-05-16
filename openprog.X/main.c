@@ -113,33 +113,26 @@ static void InitializeUSART() {
 
 
 // Entry point of the firmware
-void main(void)
-{
-	// Set all I/O pins to digital
-    ADCON1 |= 0x0F;
-    
-	// Initialize USB
-    UCFG = 0x14; // Enable pullup resistors; full speed mode
 
+void main(void) {
+    // Call user initialization function
+    UserInit();
+#if DEBUG_PRINT
+    InitializeUSART();
+#endif
+    // Initialize USB
+    UCFG = 0x14; // Enable pullup resistors; full speed mode
     deviceState = DETACHED;
     remoteWakeup = 0x00;
     currentConfiguration = 0x00;
-
-	// Call user initialization function
-	UserInit();
-	
-	while(1)
-	{
-		// Ensure USB module is available
-		EnableUSBModule();
-
-		// As long as we aren't in test mode (UTEYE), process
-		// USB transactions.
-		if(UCFGbits.UTEYE != 1)
-		ProcessUSBTransactions();
-
-		// Application specific tasks
-		ProcessIO();
-        
+    while (1) {
+        // Ensure USB module is available
+        EnableUSBModule();
+        // As long as we aren't in test mode (UTEYE), process
+        // USB transactions.
+        if (UCFGbits.UTEYE != 1)
+            ProcessUSBTransactions();
+        // Application specific tasks
+        ProcessIO();
     }
 }
