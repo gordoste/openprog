@@ -214,6 +214,10 @@ byte IN_pending;
 byte led_cnt;
 byte T2,M,N;
 int T3,timeout;
+//byte progmode=0;
+//int genCount=0;
+//int loopCounter=0;
+//int loopPointer=0;
 
 /* all accesses to these will be unbanked */
 __near static unsigned int RXptr=0,TXptr=0,TXaux=0;
@@ -273,7 +277,7 @@ void UserInit(void)
 #endif
 	ADCON0=0x01;			//AN0, ADC ON
 	ADCON2=0b10000110;		//LSB, 0Tad (no channel switch), FOSC/64
-	if(PORTEbits.RE3==0) progmode=1;
+//	if(PORTEbits.RE3==0) progmode=1;
 	IN_pending=0;
 	led_cnt=0;
 	LATB=0;
