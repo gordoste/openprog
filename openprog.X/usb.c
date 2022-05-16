@@ -521,7 +521,7 @@ static void GetDescriptor(void)
 static void GetStatus(void)
 {
     // Mask off the Recipient bits
-    byte recipient = SetupPacket.bmRequestType & 0x1F;
+    byte recipient =(byte)(SetupPacket.bmRequestType & 0x1F);
 #if DEBUG_PRINT
 	printf("GetStatus\r\n");
 #endif
@@ -547,8 +547,8 @@ static void GetStatus(void)
     else if (recipient == 0x02)
     {
         // Endpoint
-        byte endpointNum = SetupPacket.wIndex0 & 0x0F;
-        byte endpointDir = SetupPacket.wIndex0 & 0x80;
+        byte endpointNum = (byte)(SetupPacket.wIndex0 & 0x0F);
+        byte endpointDir = (byte)(SetupPacket.wIndex0 & 0x80);
         requestHandled = 1;
         // Endpoint descriptors are 8 bytes long, with each in and out taking 4 bytes
         // within the endpoint. (See PIC datasheet.)
@@ -570,8 +570,8 @@ static void GetStatus(void)
 // Process SET_FEATURE and CLEAR_FEATURE
 static void SetFeature(void)
 {
-    byte recipient = SetupPacket.bmRequestType & 0x1F;
-    byte feature = SetupPacket.wValue0;
+    byte recipient = (byte)(SetupPacket.bmRequestType & 0x1F);
+    byte feature = (byte)(SetupPacket.wValue0);
 #if DEBUG_PRINT
 	printf("SetFeature\r\n");
 #endif
@@ -592,8 +592,8 @@ static void SetFeature(void)
     else if (recipient == 0x02)
     {
         // Endpoint
-        byte endpointNum = SetupPacket.wIndex0 & 0x0F;
-        byte endpointDir = SetupPacket.wIndex0 & 0x80;
+        byte endpointNum = (byte)(SetupPacket.wIndex0 & 0x0F);
+        byte endpointDir = (byte)(SetupPacket.wIndex0 & 0x80);
         if ((feature == ENDPOINT_HALT) && (endpointNum != 0))
         {
             // Halt endpoint (as long as it isn't endpoint 0)
@@ -619,6 +619,9 @@ static void SetFeature(void)
 
 void ProcessStandardRequest(void)
 {
+#if DEBUG_PRINT
+            printf("ProcessStandardRequest()\r\n");
+#endif
     byte request = SetupPacket.bRequest;
 
     if((SetupPacket.bmRequestType & 0x60) != 0x00)
@@ -769,7 +772,7 @@ void OutDataStage(void)
 {
     word i, bufferSize;
 
-    bufferSize = ((0x03 & ep0Bo.Stat) << 8) | ep0Bo.Cnt;
+    bufferSize = (unsigned int)(((0x03 & ep0Bo.Stat) << 8) | ep0Bo.Cnt);
 
 #if DEBUG_PRINT
 	printf("OutDataStage: %d\r\n", bufferSize);
@@ -800,6 +803,10 @@ void OutDataStage(void)
 // the transfer.
 void SetupStage(void)
 {
+#if DEBUG_PRINT
+    printf("SetupStage()\r\n");
+#endif
+    
     // Note: Microchip says to turn off the UOWN bit on the IN direction as
     // soon as possible after detecting that a SETUP has been received.
     ep0Bi.Stat &= ~UOWN;
@@ -887,7 +894,7 @@ void ProcessControlTransfer(void)
     if (USTAT == 0)
     {
         // Endpoint 0:out
-        byte PID = (ep0Bo.Stat & 0x3C) >> 2; // Pull PID from middle of BD0STAT
+        byte PID = (byte)((ep0Bo.Stat & 0x3C) >> 2); // Pull PID from middle of BD0STAT
         if (PID == 0x0D)
             // SETUP PID - a transaction is starting
             SetupStage();
