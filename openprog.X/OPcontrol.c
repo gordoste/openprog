@@ -201,9 +201,9 @@ software SPI
 /** V A R I A B L E S ********************************************************/
 
 #if !defined(__18F2450)
-rom char eestr[]="Open Programmer v. ";
-rom char eestr2[]=VERSION;
-rom char eestr3[]=" - Copyright (C) 2009-2020 Alberto Maccioni - This is free software";
+const char eestr[]="Open Programmer v. ";
+const char eestr2[]=VERSION;
+const char eestr3[]=" - Copyright (C) 2009-2020 Alberto Maccioni - This is free software";
 #endif
 
 char transmit_buffer[HID_OUTPUT_REPORT_BYTES];

@@ -484,7 +484,7 @@ static void GetDescriptor(void)
 #endif
                 requestHandled = 1;
 #if 1
-                ROMoutPtr = (rom byte *)&configDescriptor;
+                ROMoutPtr = (const byte *)&configDescriptor;
                 wCount = CFSZ;
 				transferType=1;
 #else
@@ -507,11 +507,11 @@ static void GetDescriptor(void)
 #endif
                 requestHandled = 1;
                 if (descriptorIndex == 0)
-                    ROMoutPtr = (rom byte*)&stringDescriptor0;
+                    ROMoutPtr = (const byte*)&stringDescriptor0;
                 else if (descriptorIndex == 1)
-                    ROMoutPtr = (rom byte*)&stringDescriptor1;
+                    ROMoutPtr = (const byte*)&stringDescriptor1;
                 else
-                    ROMoutPtr = (rom byte*)&stringDescriptor2;
+                    ROMoutPtr = (const byte*)&stringDescriptor2;
                 wCount = *ROMoutPtr;
 				transferType=1;
         }
