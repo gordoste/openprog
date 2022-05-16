@@ -81,14 +81,7 @@
 #else
 #pragma config BORV=21
 #endif
-#pragma code low_vector=0x8
-void low_interrupt (void)
-{
-	_asm GOTO timer_isr _endasm
-}
 
-
-#pragma code
 
 // Allocate buffers in RAM for storage of bytes that have either just
 // come in from the SIE or are waiting to go out to the SIE.

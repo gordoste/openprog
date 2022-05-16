@@ -197,7 +197,6 @@ volatile byte HIDTxBuffer[HID_INPUT_REPORT_BYTES];
 //
 // Start of code for HID specific code.
 //
-#pragma code
 // Send up to len bytes to the host.  The actual number of bytes sent is returned
 // to the caller.  If the send failed (usually because a send was attempted while
 // the SIE was busy processing the last request), then 0 is returned.

@@ -201,13 +201,10 @@ software SPI
 /** V A R I A B L E S ********************************************************/
 
 #if !defined(__18F2450)
-#pragma romdata eedata=0xF00000
 rom char eestr[]="Open Programmer v. ";
 rom char eestr2[]=VERSION;
 rom char eestr3[]=" - Copyright (C) 2009-2020 Alberto Maccioni - This is free software";
 #endif
-
-#pragma udata
 
 char transmit_buffer[HID_OUTPUT_REPORT_BYTES];
 char receive_buffer[HID_INPUT_REPORT_BYTES];
@@ -218,7 +215,6 @@ byte led_cnt;
 byte T2,M,N;
 int T3,timeout;
 
-#pragma idata access my_access
 /* all accesses to these will be unbanked */
 near unsigned char RXptr=0,TXptr=0,TXaux=0;
 near int pwm=0;
@@ -262,7 +258,6 @@ unsigned char SW_IO_SPI(unsigned char c);	//transfer one byte
 
 /** D E C L A R A T I O N S **************************************************/
 
-#pragma code
 void UserInit(void)
 {
 	IN_pending=0;
@@ -3787,7 +3782,6 @@ void interrupt low_priority timer_isr (void)
 		CCP1CON = (byte)((CCP1CON & 0xCF) | ((LOBYTE(pwm) >> 2) & 0x30));
 	}
 }
-#pragma code
 
 /******************************************************************************
 Delay function; waits for N us   (minimum 2 us!)
