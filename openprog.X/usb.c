@@ -171,28 +171,21 @@ const byte stringDescriptor2[] =
 	' ',0,'U',0,'S',0,'B',0,' ',0,'H',0,'I',0,'D',0,' ',0,'c',0,'l',0,'a',0,'s',0,'s',0,
 };
 
-#pragma udata usb4=0x400
-volatile BDT  ep0Bo; //Endpoint #0 BD Out
-volatile BDT  ep0Bi; //Endpoint #0 BD In
-volatile BDT  ep1Bo; //Endpoint #1 BD Out
-volatile BDT  ep1Bi; //Endpoint #1 BD In
+
+volatile BDT ep0Bo __at(0x0400); //Endpoint #0 BD Out
+volatile BDT ep0Bi __at(0x0404); //Endpoint #0 BD In
+volatile BDT ep1Bo __at(0x0408); //Endpoint #1 BD Out
+volatile BDT ep1Bi __at(0x040C); //Endpoint #1 BD In
 
 // TBD: add definitions for additional endpoints (2-16).
 
-// Put endpoint 0 buffers into dual port RAM
-#if !defined(__18F2450)
-#pragma udata usb5=0x500 
-#endif
 //SetupPacket controlTransferBuffer
-volatile setupPacketStruct SetupPacket;
-volatile byte controlTransferBuffer[E0SZ];
-
-// Put USB I/O buffers into dual port RAM.
-//#pragma udata ram5 //HIDRxBuffer HIDTxBuffer
+volatile __section("usbBank5") setupPacketStruct SetupPacket;
+volatile __section("usbBank5") byte controlTransferBuffer[E0SZ];
 
 // HID specific buffers
-volatile byte HIDRxBuffer[HID_OUTPUT_REPORT_BYTES];
-volatile byte HIDTxBuffer[HID_INPUT_REPORT_BYTES];
+volatile byte __section("usbBank5") HIDRxBuffer[HID_OUTPUT_REPORT_BYTES];
+volatile byte __section("usbBank5") HIDTxBuffer[HID_INPUT_REPORT_BYTES];
 
 //
 // Start of code for HID specific code.
