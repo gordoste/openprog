@@ -3720,8 +3720,7 @@ void TXins(byte x)
  * Overview:		DCDC control function
  * Note:            None
  *****************************************************************************/
-#pragma interruptlow timer_isr
-void timer_isr (void)
+void interrupt low_priority timer_isr (void)
 {
 #if defined(NO_CCP2)			//no autostart by CCP2
 	ADCON0bits.GO=1;			//start conversion
