@@ -354,8 +354,8 @@ void ParseCommands(void)
 	if (RXptr<number_of_bytes_read&&!IN_pending){
 		LED1=1;
 		switch(receive_buffer[RXptr]){
-			case NOP:		//NOP
-				TXins(NOP);
+			case NOP_OP:		//NOP
+				TXins(NOP_OP);
 				break;
 			case PROG_RST:		//Reset, 10 bytes [32us]
 				TXins(PROG_RST);

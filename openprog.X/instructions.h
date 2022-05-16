@@ -1,5 +1,5 @@
 // programmer instructions v0.10.0
-#define NOP 				0x00
+#define NOP_OP 				0x00
 #define PROG_RST 			0x01	//		->10B
 #define PROG_ID 			0x02	//		->6B
 #define CHECK_INS 			0x03	//+1B 	->1B
