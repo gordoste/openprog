@@ -19,9 +19,8 @@
  * or see <http://www.gnu.org/licenses/>
  */
 
-#include <p18cxxx.h>
+#include <xc.h>
 #include <stdio.h>
-#include <usart.h>
 #include "usb.h"
 #include "OPcontrol.h"		// User code
 

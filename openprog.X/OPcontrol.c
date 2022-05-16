@@ -70,7 +70,7 @@ software SPI
 
 
 /** I N C L U D E S **********************************************************/
-#include <p18cxxx.h>
+#include <xc.h>
 #include "usb.h"
 #include "OPcontrol.h"
 #include "instructions.h"
