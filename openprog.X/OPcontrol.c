@@ -368,6 +368,7 @@ void ParseCommands(void)
 	//total overhead between instructions is 30us (not counting DCDC control function)
 	if (RXptr<number_of_bytes_read&&!IN_pending){
 		LED1=1;
+        _DEBUG1("%02x\r\n",receive_buffer[RXptr]);
 		switch(receive_buffer[RXptr]){
 			case NOP_OP:		//NOP
 				TXins(NOP_OP);

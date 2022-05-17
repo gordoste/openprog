@@ -80,7 +80,7 @@
 // CONFIG7H (default)
 #pragma config EBTRB = OFF      // Boot Block Table Read Protection bit (Boot block (000000-0007FFh) is not protected from table reads executed in other blocks)
 
-#if DEBUG_PRINT
+#ifdef DEBUG
 
 void putch(char data) {
     while (0 == PIR1bits.TX1IF) {
@@ -117,7 +117,7 @@ static void InitializeUSART() {
 void main(void) {
     // Call user initialization function
     UserInit();
-#if DEBUG_PRINT
+#ifdef DEBUG
     InitializeUSART();
 #endif
     // Initialize USB
