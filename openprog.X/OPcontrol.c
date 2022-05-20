@@ -663,11 +663,10 @@ void ParseCommands(void)
 						Nop();
 					}
 					CKpulseN();		//start bit
+                    i=14;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	14
-					movwf	_i,0
 					ciclo_c1:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -714,11 +713,10 @@ void ParseCommands(void)
 						Nop();
 					}
 					CKpulseN();		//start bit
+                    i=14;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	14
-					movwf	_i,0
 					ciclo_l1:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -763,11 +761,10 @@ void ParseCommands(void)
 						Nop();
 					}
 					CKpulseN();		//start bit
+                    i=8;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	8
-					movwf	_i,0
 					ciclo_l2:
 					RRCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -817,11 +814,10 @@ void ParseCommands(void)
 						Nop();
 					}
 				CKpulseN();		//start bit
+                i=14;
 #asm
                 GLOBAL  _i
                 GLOBAL  _d
-				MOVLW	14
-				movwf	_i,0
 				ciclo_r1:
 				BSF 	LATB,CKnum,0
 				nop
@@ -872,11 +868,10 @@ void ParseCommands(void)
 						Nop();
 					}
 				CKpulseN();		//start bit
+                i=8;
 #asm
                 GLOBAL  _i
                 GLOBAL  _d
-				MOVLW	8
-				movwf	_i,0
 				ciclo_r3:
 				BSF 	LATB,CKnum,0
 				nop
@@ -1053,11 +1048,10 @@ void ParseCommands(void)
 				if(RXptr+1<number_of_bytes_read){
 					LOBYTE(d)=receive_buffer[++RXptr];
 					INTCONbits.GIE=0;
+                    i=6;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	6
-					movwf	_i,0
 					ciclo_c2:
 					RRCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -1105,11 +1099,10 @@ void ParseCommands(void)
 						Nop();
 					}
 					CKpulseN();		//start bit
+                    i=14;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	14
-					movwf	_i,0
 					ciclo_p1:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1181,11 +1174,10 @@ void ParseCommands(void)
 								Nop();
 							}
 						CKpulseN();		//start bit
+                        i=14;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
-						MOVLW	14
-						movwf	_i,0
 						ciclo_p2:
 						BSF 	LATB,CKnum,0
 						nop
@@ -1298,11 +1290,10 @@ void ParseCommands(void)
 						Nop();
 					}
 					CKpulseN();		//start bit
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_c3:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1357,11 +1348,10 @@ void ParseCommands(void)
 					}
 					D0();
 					CKpulseN();		//start bit
+                    i=14;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	14
-					movwf	_i,0
 					ciclo_l3:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1408,11 +1398,10 @@ void ParseCommands(void)
 					}
 				D0();
 				CKpulseN();		//start bit
+                i=14;
 #asm
                 GLOBAL  _i
                 GLOBAL  _d
-				MOVLW	14
-				movwf	_i,0
 				ciclo_r4:
 				BSF 	LATB,CKnum,0
 				nop
@@ -1451,11 +1440,10 @@ void ParseCommands(void)
 					CKpulseN();
 					HIBYTE(d)=receive_buffer[++RXptr];
 					LOBYTE(d)=receive_buffer[++RXptr];
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_r181:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1498,11 +1486,10 @@ void ParseCommands(void)
 				CKpulse();
 				CKpulse();
 				Ddir_bit=1;		//Input
+                i=8;
 #asm
                 GLOBAL  _i
                 GLOBAL  _d
-				MOVLW	8
-				movwf	_i,0
 				ciclo_r182:
 				BSF 	LATB,CKnum,0	//CKpulse();
 				BCF 	LATB,CKnum,0
@@ -1539,11 +1526,10 @@ void ParseCommands(void)
 				CKpulse();
 				CKpulse();
 				Ddir_bit=1;		//Input
+                i=8;
 #asm
                 GLOBAL  _i
                 GLOBAL  _d
-				MOVLW	8
-				movwf	_i,0
 				ciclo_r183:
 				BSF 	LATB,CKnum,0	//CKpulse();
 				BCF 	LATB,CKnum,0
@@ -1585,11 +1571,10 @@ void ParseCommands(void)
 						CKpulse();
 						CKpulse();
 						Ddir_bit=1;		//Input
+                        i=8;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
-						MOVLW	8
-						movwf	_i,0
 						ciclo_r184:
 						BSF 	LATB,CKnum,0	//CKpulse();
 						BCF 	LATB,CKnum,0
@@ -1624,11 +1609,10 @@ void ParseCommands(void)
 					CKpulse();
 					HIBYTE(d)=receive_buffer[++RXptr];
 					LOBYTE(d)=receive_buffer[++RXptr];
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_r187:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1666,11 +1650,10 @@ void ParseCommands(void)
 						CKpulse();
 						HIBYTE(d)=receive_buffer[++RXptr];
 						LOBYTE(d)=receive_buffer[++RXptr];
+                        i=16;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
-	  					MOVLW	16
-						movwf	_i,0
 						ciclo_r188:
 						RRCF	_d+1,1,0
 						RRCF	_d,1,0
@@ -1704,11 +1687,10 @@ void ParseCommands(void)
 					CKpulse();
 					HIBYTE(d)=receive_buffer[++RXptr];
 					LOBYTE(d)=receive_buffer[++RXptr];
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_r189:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1767,11 +1749,10 @@ void ParseCommands(void)
 					CKpulse();
 					HIBYTE(d)=receive_buffer[++RXptr];
 					LOBYTE(d)=receive_buffer[++RXptr];
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_r190:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1823,11 +1804,10 @@ void ParseCommands(void)
 					INTCONbits.GIE=0;
 					CK1();
 					Ddir_bit=0;		//Output
+                    i=4;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	4
-					movwf	_i,0
 					ciclo_r191:
 					RRCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -1840,11 +1820,10 @@ void ParseCommands(void)
 #endasm
 					HIBYTE(d)=receive_buffer[++RXptr];
 					LOBYTE(d)=receive_buffer[++RXptr];
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_r192:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -1871,11 +1850,10 @@ void ParseCommands(void)
 					INTCONbits.GIE=0;
 					CK1();
 					Ddir_bit=0;		//Output
+                    i=4;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	4
-					movwf	_i,0
 					ciclo_r193:
 					RRCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -1895,11 +1873,10 @@ void ParseCommands(void)
 					CKpulse();
 					CKpulse();
 					Ddir_bit=1;		//Input
+                    i=8;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	8
-					movwf	_i,0
 					ciclo_r194:
 					BSF 	LATB,CKnum,0	//CKpulse();
 					BCF 	LATB,CKnum,0
@@ -2505,12 +2482,11 @@ void ParseCommands(void)
 					HIBYTE(d)=receive_buffer[++RXptr];	//H
 					LOBYTE(d)=receive_buffer[++RXptr];	//
 					i2=receive_buffer[++RXptr];			//L
+                    i=24;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
                     GLOBAL  _i2
-					MOVLW	24
-					movwf	_i,0
 					ciclo_r195:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -2549,12 +2525,11 @@ void ParseCommands(void)
 					HIBYTE(d)=receive_buffer[++RXptr];	//H
 					LOBYTE(d)=receive_buffer[++RXptr];	//
 					i2=receive_buffer[++RXptr];			//L
+                    i=24;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
                     GLOBAL  _i2
-					MOVLW	24
-					movwf	_i,0
 					ciclo_r196:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -2594,12 +2569,11 @@ void ParseCommands(void)
 					HIBYTE(d)=receive_buffer[++RXptr];	//H
 					LOBYTE(d)=receive_buffer[++RXptr];	//
 					i2=receive_buffer[++RXptr];			//L
+                    i=24;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
                     GLOBAL  _i2
-					MOVLW	24
-					movwf	_i,0
 					ciclo_r196b:
 					RRCF	_d+1,1,0
 					RRCF	_d,1,0
@@ -2650,12 +2624,11 @@ void ParseCommands(void)
 						HIBYTE(d)=receive_buffer[++RXptr];	//H
 						LOBYTE(d)=receive_buffer[++RXptr];	//
 						i2=receive_buffer[++RXptr];			//L
+                    i=24;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
                         GLOBAL  _i2
-						MOVLW	24
-						movwf	_i,0
 						ciclo_r195b:
 						RRCF	_d+1,1,0
 						RRCF	_d,1,0
@@ -2692,11 +2665,10 @@ void ParseCommands(void)
 				D0();
 				for(i=0;i<11;i++)CKpulseL();
 				Ddir_bit=1;		//Input
+                i=16;
 #asm
                 GLOBAL  _i
                 GLOBAL  _d
-				MOVLW	16
-				movwf	_i,0
 				ciclo_r197:
 				BSF 	LATB,CKnum,0	//CKpulse();
 				nop
@@ -2737,13 +2709,12 @@ void ParseCommands(void)
 					for(j=i;j;j--){
 						HIBYTE(d)=receive_buffer[++RXptr];	//H
 						LOBYTE(d)=receive_buffer[++RXptr];	//L
+                        i=16;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
                         GLOBAL  _i2
                         GLOBAL  _T1
-						MOVLW	16
-						movwf	_i,0
 						ciclo_r198:
 						RLCF	_d,1,0
 						RLCF	_d+1,1,0
@@ -2806,13 +2777,12 @@ void ParseCommands(void)
 					INTCONbits.GIE=0;
 					Ddir_bit=1;		//Input
 					for(j=i;j;j--){
+                        i=16;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
                         GLOBAL  _i2
                         GLOBAL  _T1
-						MOVLW	16
-						movwf	_i,0
 						ciclo_r199:
 						BSF 	LATB,CKnum,0	//CKpulse();
 						movff	_T1,_i2
@@ -3282,6 +3252,7 @@ void ParseCommands(void)
 					for(j=i;j;j--){
 						LOBYTE(d)=receive_buffer[++RXptr];	//PB1=RB0
 						HIBYTE(d)=receive_buffer[++RXptr];	//PB0=RC7
+                        i=8;
 #asm
                         GLOBAL  _i
                         GLOBAL  _d
@@ -3290,8 +3261,6 @@ void ParseCommands(void)
 						nop
 						nop
 						BCF 	LATC,PB3,0
-						MOVLW	8
-						movwf	_i,0
 						ciclo_r200:
 						BCF 	STATUS,0,0		//Carry
 						BTFSC 	PORTB,PB2,0
@@ -3343,14 +3312,13 @@ void ParseCommands(void)
 				if(RXptr+1<number_of_bytes_read){
 					LOBYTE(d)=receive_buffer[++RXptr];
 					INTCONbits.GIE=0;
+                    i=6;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
 					RLCF	_d,1,0
 					RLCF	_d,1,0
 					BCF 	LATB,TDInum,0	//D0();
-					MOVLW	6
-					movwf	_i,0
 					ciclo_201:
 					RLCF	_d,1,0
 					BTFSS 	STATUS,0,0		//Carry
@@ -3376,6 +3344,7 @@ void ParseCommands(void)
 				if(RXptr+1<number_of_bytes_read){
 					LOBYTE(d)=receive_buffer[++RXptr];
 					INTCONbits.GIE=0;
+                    i=4;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
@@ -3390,8 +3359,6 @@ void ParseCommands(void)
                     BCF LATB,TCKnum,0                    
 					BSF LATB,TCKnum,0//TCK pulse;
                     BCF LATB,TCKnum,0                    
-					MOVLW	4
-					movwf	_i,0
 					ciclo_202:
 					RRCF	_d,1,0
 					BTFSS 	STATUS,0,0		//Carry
@@ -3434,6 +3401,7 @@ void ParseCommands(void)
 					HIBYTE(d)=receive_buffer[++RXptr];	//H
 					LOBYTE(d)=receive_buffer[++RXptr];	//L
 					INTCONbits.GIE=0;
+                    i=31;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
@@ -3447,8 +3415,6 @@ void ParseCommands(void)
                     BCF LATB,TCKnum,0                    
 					BSF LATB,TCKnum,0//TCK pulse;
                     BCF LATB,TCKnum,0                    
-					MOVLW	31
-					movwf	_i,0
 					ciclo_203:
 					RRCF	_dH+1,1,0
 					RRCF	_dH,1,0
@@ -3507,6 +3473,7 @@ void ParseCommands(void)
 					HIBYTE(d)=receive_buffer[++RXptr];	//H
 					LOBYTE(d)=receive_buffer[++RXptr];	//L
 					INTCONbits.GIE=0;
+                    i=31;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
@@ -3523,8 +3490,6 @@ void ParseCommands(void)
 					BSF LATB,TCKnum,0//TCK pulse;
                     BCF LATB,TCKnum,0
                     //PrAcc
-					MOVLW	31
-					movwf	_i,0
 					ciclo_204:
 					RRCF	_dH+1,1,0
 					RRCF	_dH,1,0
@@ -3583,11 +3548,10 @@ void ParseCommands(void)
 					LOBYTE(d)=receive_buffer[++RXptr];
 					INTCONbits.GIE=0;
 					Ddir_bit=0;		//Output
+                    i=8;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	8
-					movwf	_i,0
 					ciclo_300:
 					RLCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -3618,11 +3582,10 @@ void ParseCommands(void)
 					LOBYTE(d)=receive_buffer[++RXptr];
 					INTCONbits.GIE=0;
 					Ddir_bit=0;		//Output
+                    i=8;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	8
-					movwf	_i,0
 					ciclo_301:
 					RLCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -3639,11 +3602,10 @@ void ParseCommands(void)
 					for(i=0;i<2;i++) Nop();	//>1us
 					for(i=0;i<7;i++) CKpulseN();	//ignore 7 bits (24-1-16)
                     d=0;
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_302:
 					BSF 	LATB,CKnum,0
 					BCF 	STATUS,0,0		//Carry
@@ -3678,11 +3640,10 @@ void ParseCommands(void)
 					LOBYTE(d)=receive_buffer[++RXptr];
 					INTCONbits.GIE=0;
 					Ddir_bit=0;		//Output
+                    i=8;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	8
-					movwf	_i,0
 					ciclo_303:
 					RLCF	_d,1,0
 					BCF 	LATB,Dnum,0	//D0();
@@ -3698,11 +3659,10 @@ void ParseCommands(void)
 					HIBYTE(d)=receive_buffer[++RXptr];
 					LOBYTE(d)=receive_buffer[++RXptr];
 					for(i=0;i<7;i++) CKpulseN();	//ignore 7 bits (24-1-16)
+                    i=16;
 #asm
                     GLOBAL  _i
                     GLOBAL  _d
-					MOVLW	16
-					movwf	_i,0
 					ciclo_304:
 					RLCF	_d,1,0			//<<1 L
 					RLCF	_d+1,1,0			//<<1 H
@@ -4139,14 +4099,13 @@ unsigned char SW_IO_SPI(unsigned char c){
 	INTCONbits.GIE=0;
 	I2C_BUFFER=c;
 	RES0=T2;
+    i2=8;
 #asm
     GLOBAL  _RES0
     GLOBAL  _I2C_BUFFER
     GLOBAL  _tt
     GLOBAL  _T1
     GLOBAL  _i2
-	MOVLW	8
-	movwf	_i2,0
 spi_cycle:
 
 	btfsc 	_RES0,2,0			//Check data phase (bit 2 of T2)
