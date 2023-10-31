@@ -21,9 +21,9 @@ Testing conducted on Openprog All-In-One v1.0b:
 |Header|Function|Device1|Device2|Device3|Status|
 |------|--------|-------|-------|-------|------|
 |progAVR.h  |   WriteAT| |
-|progAVR.h	WriteATmega|	ATmega88	|ATtiny861A	
-|progAVR.h	WriteAT_HV|	ATtiny85		
-|progAVR.h	WriteATfuseSlow|			
+|progAVR.h	|   WriteATmega|	ATmega88	|ATtiny861A	
+|progAVR.h	|   WriteAT_HV|	ATtiny85		
+|progAVR.h	|   WriteATfuseSlow|			
 |progEEPROM.h|	WriteI2C|	24LC01		
 |progEEPROM.h|	Write93Sx|			
 |progEEPROM.h|	Write93Cx|	93C46A		
