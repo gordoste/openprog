@@ -92,4 +92,8 @@
 #define READ_RAM			0xF0	//+2B	->3B
 #define WRITE_RAM			0xF1	//+3B	->3B
 #define LOOP				0xF2
+#define TBLRD				0xF3	//+3B	->2B
+#define TBLWT				0xF4	//+5B
+#define REPEAT				0xF5	//+1B
+#define REPEAT_END			0xF6
 #define MAX_INS 			0x59	//last instruction
