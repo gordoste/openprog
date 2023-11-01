@@ -35,7 +35,7 @@ History
 				 new USB VID&PID (0x1209,0x5432), changed some CK timing, reduced CLOCK_GEN startup time
 0.11.0 - 14/1/19 added ICSP8_SHORT,ICSP8_READ,ICSP8_LOAD
 0.11.2 - 23/9/20 extended ICSP8_READ payload to 16 bits (for PIC18) 
-0.12.0 - 27/5/22 Switch to XC8 compiler and MPLAB X (supported toolset)
+0.12.0 - 27/5/22 Switch to XC8 compiler and MPLAB X (supported toolset), add REPEAT, REPEAT_END
 *********************************************************************
 Map of peripherals
 
@@ -50,7 +50,7 @@ CCP1	(if DCDC on): PWM mode, clock from timer2, 90 kHz, to DCDC converter
 		(after CLOCK_GEN command): compare mode, reset timer3 on match
 
 CCP2	(if DCDC on): compare mode, trigger ADC every 250us
-		(after CLOCK_GEN command): compare mode, toggle on match, clock to external devices
+		(after CLOCK_GEN command): compare mode, toggle on match, clock to external devices on RB3
 
 ADC: 	acquires Vreg*12k/34k on AN0, FOSC/64, triggered by CCP2, generates interrupt
 
@@ -58,10 +58,6 @@ MSSP 	(I2C mode): master
 		the following was removed for problems with the hardware peripheral:
 		[(SPI mode): master, clock from timer2 ]
 
-If compiled for 18F2450:
-Timer1  (if DCDC on): interrupt every 250us, ADC started by interrupt routine;
-no CCP2
-no MSSP
 software I2C
 software SPI
 
