@@ -49,6 +49,7 @@
 #define INS_ERR	 	0xfe	//instruction error
 #define ACK_ERR 	0xfd	//I2C acknowledge error
 #define SW_SPI	//some chips (such as 18F2550) have bugs in the hardware implementation
+#define SW_I2C
 #if defined(__18F2455)||defined(__18F2550)
 	#define ID0	1
 #elif defined(__18F2450)
@@ -59,7 +60,7 @@
 	#define ID0	3
 	#define ADC12		//12 bit ADC requires a different algorithm for DCDC control
 #elif defined(__18F25K50)
-	#define ID0	4
+	#define ID0	5       // gordoste variant firmware
 #else
 	#define ID0	255
 #endif
