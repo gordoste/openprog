@@ -401,6 +401,7 @@ void ParseCommands(void)
 			case WAIT_US:		//manual delay us (8 bit)
 				TXins(WAIT_US);
 				if(RXptr+1<number_of_bytes_read){
+                    INTCONbits.GIE=0;
 					for(i=receive_buffer[++RXptr];i;i--){
 						Nop();
 						Nop();
@@ -410,6 +411,7 @@ void ParseCommands(void)
 						Nop();
 						Nop();
 					}
+                    INTCONbits.GIE=1;
 				}
 				else{
 					TXins(RX_ERR);
@@ -419,8 +421,11 @@ void ParseCommands(void)
 			case READ_ADC:		//read ADC
 				PIR2bits.HLVDIF=0;
 				TXins(READ_ADC);
+                INTCONbits.GIE=0;
 				ADCON0bits.GO=1;
 				while(ADCON0bits.GO);
+                PIR1bits.ADIF=0;
+                INTCONbits.GIE=1;
 				if(PIR2bits.HLVDIF){
 					TXins(0);
 					TXins(0);
