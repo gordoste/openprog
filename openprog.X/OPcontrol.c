@@ -122,7 +122,7 @@ void SWStartI2C( void );               // Generate bus start condition
 void SWRestartI2C( void );             // Generate bus restart condition
 signed char SWAckI2C( void );             // Read bus ACK condition
 unsigned int  SWGetcI2C( void );          // Read in single byte
-signed char SWPutcI2C( auto unsigned char data_out ); // Write out single byte
+signed char SWPutcI2C( unsigned char data_out ); // Write out single byte
 void NAckI2C( void );
 void AckI2C( void );
 void DelayT();
@@ -3605,13 +3605,13 @@ void ParseCommands(void)
 //					TBLPTRU=receive_buffer[++RXptr];
 //					TBLPTRH=receive_buffer[++RXptr];
 //					TBLPTRL=receive_buffer[++RXptr];
-//					_asm 
+//#asm 
 //							TBLRDPOSTINC
-//					_endasm
+//#endasm
 //					TXins(TABLAT);
-//					_asm 
+//#asm 
 //							TBLRDPOSTDEC
-//					_endasm;
+//#endasm
 //					TXins(TABLAT);
 //				}
 //				else{
@@ -3626,42 +3626,42 @@ void ParseCommands(void)
 //					TBLPTRH=receive_buffer[++RXptr];
 //					TBLPTRL=receive_buffer[++RXptr];
 //					TABLAT=receive_buffer[++RXptr];
-//					_asm 
+//#asm 
 //							TBLWTPOSTINC
-//					_endasm
+//#endasm
 //					TABLAT=receive_buffer[++RXptr];
-//					_asm 
+//#asm 
 //							TBLWTPOSTDEC
-//					_endasm
+//#endasm
 //				}
 //				else{
 //					TXins(RX_ERR);
 //					receive_buffer[RXptr+1]=FLUSH;
 //				}
 //				break;
-//			case REPEAT:		//prova
-//				TXins(REPEAT);
-//				if(RXptr+1<number_of_bytes_read){
-//					loopCounter=receive_buffer[++RXptr];
-//					TXins(loopCounter);
-//					loopPointer=RXptr+1;	//loop address
-//				}
-//				else{
-//					TXins(RX_ERR);
-//					receive_buffer[RXptr+1]=FLUSH;
-//				}
-//				break;
-//			case REPEAT_END:		//prova
-//				TXins(REPEAT_END);
-//				TXins(--loopCounter);
-//				if(loopCounter>0){
-//					for(;TXptr<HID_INPUT_REPORT_BYTES;TXptr++) transmit_buffer[TXptr]=0;
-//					TXptr=0;
-//					if(!(ep1Bi.Stat&UOWN)) HIDTxReport(transmit_buffer, HID_INPUT_REPORT_BYTES);
-//					else IN_pending=1;
-//					RXptr=loopPointer-1;	//jump to start of loop
-//				}
-//				break;
+			case REPEAT:		//prova
+				TXins(REPEAT);
+				if(RXptr+1<number_of_bytes_read){
+					loopCounter=receive_buffer[++RXptr];
+					TXins(loopCounter);
+					loopPointer=RXptr+1;	//loop address
+				}
+				else{
+					TXins(RX_ERR);
+					receive_buffer[RXptr+1]=FLUSH;
+				}
+				break;
+			case REPEAT_END:		//prova
+				TXins(REPEAT_END);
+				TXins(--loopCounter);
+				if(loopCounter>0){
+					for(;TXptr<HID_INPUT_REPORT_BYTES;TXptr++) transmit_buffer[TXptr]=0;
+					TXptr=0;
+					if(!(ep1Bi.Stat&UOWN)) HIDTxReport(transmit_buffer, HID_INPUT_REPORT_BYTES);
+					else IN_pending=1;
+					RXptr=loopPointer-1;	//jump to start of loop
+				}
+				break;
 #if !defined(SW_SPI)					//hardware peripheral
 			case SPI_TEST:				//SPI readback (nbytes)
 				TXins(SPI_TEST);
@@ -3873,9 +3873,9 @@ signed char SWPutcI2C( unsigned char data_out )
 
   do
     {
-     I2C_BUFFER &= 0xFF;          // generate movlb instruction
 #asm
-      rlcf I2C_BUFFER,1,1         // rotate into carry and test
+      GLOBAL    _I2C_BUFFER
+      rlcf _I2C_BUFFER,1,0         // rotate into carry and test
 #endasm
 
       if ( STATUS & 0x01 )        // if carry set, transmit out logic 1
