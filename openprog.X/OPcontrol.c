@@ -84,18 +84,18 @@ const char eestr2[]=VERSION;
 const char eestr3[]=" - Copyright (C) 2009-2020 Alberto Maccioni - This is free software";
 #endif
 
-char transmit_buffer[HID_OUTPUT_REPORT_BYTES];
-char receive_buffer[HID_INPUT_REPORT_BYTES];
-char transmit_temp[TX_TEMP_MAX];
+unsigned char transmit_buffer[HID_OUTPUT_REPORT_BYTES];
+unsigned char receive_buffer[HID_INPUT_REPORT_BYTES];
+unsigned char transmit_temp[TX_TEMP_MAX];
 byte number_of_bytes_read=0;
 byte IN_pending;
 byte led_cnt;
 byte T2,M,N;
 int T3,timeout;
-//byte progmode=0;
-//int genCount=0;
-//int loopCounter=0;
-//int loopPointer=0;
+byte progmode=0;
+int genCount=0;
+int loopCounter=0;
+int loopPointer=0;
 
 /* all accesses to these will be unbanked */
 __near static unsigned int RXptr=0,TXptr=0,TXaux=0;
