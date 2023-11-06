@@ -11,12 +11,12 @@ The firmware targets the PIC18F25K50, but some support code for other chips rema
 
 ## Testing
 
-Testing methodology is to try to test each programming algorithm once. The different algorithms are implemented on the PC side, and the table below refers to the functions in the PC software (op/opgui) which is available at the [Openprog website](http://openprog.altervista.org).
+Testing methodology for this project is to try to test each programming algorithm once. The different algorithms are implemented on the PC side, and the table below refers to the functions in the PC software (op/opgui) which is available at the [Openprog website](http://openprog.altervista.org). The device compatibility list on that website provides a complete list of supported devices.
 
 Where no device is listed, I do not have a device to perform testing.
-Where multiple devices are listed, a "Pass" indicates all devices passed.
+Where multiple devices are listed, "PASS" indicates all devices passed. If a number appears in brackets after "PASS", then that device passed but I have not tested any others.
 
-Testing conducted on Openprog All-In-One v1.0b:
+Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/openprog_aio) v1.0b:
 
 |Header|Function|Device1|Device2|Device3|Status|
 |------|--------|-------|-------|-------|------|
@@ -44,9 +44,9 @@ Testing conducted on Openprog All-In-One v1.0b:
 |progP16.h|	Write16F87x|			
 |progP16.h|	Write16F87xA|			
 |progP16.h|	Write16F88x|			
-|progP16.h|	Write16F1xxx|	12F1572	|16F18325	
+|progP16.h|	Write16F1xxx|	12F1572	|16F18325	|  | PASS (2) |
 |progP16.h|	Write16F18xxx|	16F17114		
-|progP18.h|	Write18Fx|	18F2550	|18LF25K50	
+|progP18.h|	Write18Fx|	18LF25K50   	| 18F2550 | |PASS (1) |
 |progP18.h|	Write18FKx|			
 |progP24.h|	Write24Fx|	33FJ128GP802	| | |PASS|
 |progP24.h|	Write24Ex|	33EP512MC502	| | |PASS|
