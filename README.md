@@ -21,7 +21,7 @@ Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/ope
 |Header|Function|Device1|Device2|Device3|Status|
 |------|--------|-------|-------|-------|------|
 |progAVR.h  |   WriteAT| |
-|progAVR.h	|   WriteATmega|	ATmega88	|ATtiny861A	
+|progAVR.h	|   WriteATmega|	ATmega88	| ATtiny861A	
 |progAVR.h	|   WriteAT_HV|	ATtiny85		
 |progAVR.h	|   WriteATfuseSlow|			
 |progEEPROM.h|	WriteI2C|	24LC01		
@@ -30,10 +30,10 @@ Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/ope
 |progEEPROM.h|	Write25xx|	25AA010		
 |progEEPROM.h|	WriteOneWireMem|			
 |progEEPROM.h|	Write11xx|			
-|progP12.h|	Write12F5xx|	12F510	|16F527	|10F202
+|progP12.h|	Write12F5xx|	12F510	| 16F527	| 10F202 | PASS (1,2) |
 |progP12.h|	Write12C5xx|			
 |progP16.h|	Write12F6xx|			
-|progP16.h|	Write12F61x|	12F752	|12F609	
+|progP16.h|	Write12F61x|	12F752	| 12F609	|   | PASS (ALL) |
 |progP16.h|	Write12F62x|			
 |progP16.h|	Write16F7x|			
 |progP16.h|	Write16F71x|	16F716		
@@ -44,7 +44,7 @@ Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/ope
 |progP16.h|	Write16F87x|			
 |progP16.h|	Write16F87xA|			
 |progP16.h|	Write16F88x|			
-|progP16.h|	Write16F1xxx|	12F1572	|16F18325	|  | PASS (2) |
+|progP16.h|	Write16F1xxx|	12F1572	| 16F18325	|  | PASS (2) |
 |progP16.h|	Write16F18xxx|	16F17114		
 |progP18.h|	Write18Fx|	18LF25K50   	| 18F2550 | |PASS (1) |
 |progP18.h|	Write18FKx|			
