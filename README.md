@@ -24,7 +24,7 @@ Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/ope
 |progAVR.h	|   WriteATmega|	ATmega88	| ATtiny861A	
 |progAVR.h	|   WriteAT_HV|	ATtiny85		
 |progAVR.h	|   WriteATfuseSlow|			
-|progEEPROM.h|	WriteI2C|	24LC01		
+|progEEPROM.h|	WriteI2C|	24LC32  |   |   | PASS |		
 |progEEPROM.h|	Write93Sx|			
 |progEEPROM.h|	Write93Cx|	93C46A		
 |progEEPROM.h|	Write25xx|	25AA010		
