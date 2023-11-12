@@ -25,9 +25,6 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
-  <sourceRootList>
-    <Elem>..</Elem>
-  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
@@ -42,7 +39,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC18F-K_DFP" vendor="Microchip" version="1.6.125"/>
+        <pack name="PIC18F-K_DFP" vendor="Microchip" version="1.8.249"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -101,7 +98,7 @@
         <property key="undefine-macros" value=""/>
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
-        <property key="verbose" value="false"/>
+        <property key="verbose" value="true"/>
         <property key="warning-level" value="-3"/>
         <property key="what-to-do" value="require"/>
       </HI-TECH-COMP>
