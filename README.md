@@ -21,7 +21,7 @@ Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/ope
 |Header|Function|Device1|Device2|Device3|Status|
 |------|--------|-------|-------|-------|------|
 |progAVR.h  |   WriteAT| |
-|progAVR.h	|   WriteATmega|	ATmega88	| ATtiny861A	
+|progAVR.h	|   WriteATmega|	ATmega88	| ATtiny261A | | PASS (2) |	
 |progAVR.h	|   WriteAT_HV|	ATtiny85		
 |progAVR.h	|   WriteATfuseSlow|			
 |progEEPROM.h|	WriteI2C|	24LC32  |   |   | PASS |		
@@ -30,7 +30,7 @@ Testing conducted on [Openprog All-In-One board](https://github.com/gordoste/ope
 |progEEPROM.h|	Write25xx|	25AA010		
 |progEEPROM.h|	WriteOneWireMem|			
 |progEEPROM.h|	Write11xx|			
-|progP12.h|	Write12F5xx|	12F510	| 16F527	| 10F202 | PASS (1,2) |
+|progP12.h|	Write12F5xx|	12F510	| 16F527	| 10F202 | PASS (ALL) |
 |progP12.h|	Write12C5xx|			
 |progP16.h|	Write12F6xx|			
 |progP16.h|	Write12F61x|	12F752	| 12F609	|   | PASS (ALL) |
